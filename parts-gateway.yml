@@ -1,0 +1,53 @@
+logging:
+    file: ${LOG_TEMP:./logs}/${spring.application.name}.log
+    level:
+        cn.com.xgit: debug
+management:
+    endpoints:
+        web:
+            exposure:
+                include: bus-refresh
+server:
+    port: 9000
+spring:
+    cloud:
+        bus:
+            enabled: true
+            trace:
+                enabled: true
+    rabbitmq:
+        host: 10.100.2.109
+        password: admin
+        port: 5672
+        username: admin
+    session:
+        store-type: none
+xgxx:
+    customs:
+        claimKeyCreated: xgxxDev
+        claimKeySecret: oooooo33333
+        destinationUrl: /ius/auth/login
+        jwtExpiration: 1200
+        loginOutUrls: /ius/auth/logout
+        loginUrls: /ius/auth/login,/ius/auth/sigin
+        signInPage: /ius/auth/login
+        signOutPage: /ius/auth/logout
+        signOutSuccessUrl: /ius/auth/login
+        
+        redirectErrorPage403: http://10.100.2.109:9101/web/index
+        redirectErrorPage404: http://10.100.2.109:9101/web/index
+        redirectErrorPage500: http://10.100.2.109:9101/web/index
+zuul:
+    host:
+        connect-timeout-millis: 600000
+        socket-timeout-millis: 600000
+    max:
+        host:
+            connections: 500
+    routes:
+        api-a:
+            path: /ius/**
+            serviceid: parts-auth-server
+        api-b:
+            path: /cos/**
+            serviceid: copper-server
