@@ -6,7 +6,7 @@ management:
     endpoints:
         web:
             exposure:
-                include: bus-refresh
+                include: bus-refresh,health,info
 server:
     port: 9000
 spring:
@@ -15,6 +15,11 @@ spring:
             enabled: true
             trace:
                 enabled: true
+    datasource:
+        driverClassName: com.mysql.jdbc.Driver
+        password: ''
+        url: jdbc:mysql://127.0.0.1:3306/parts_rm?characterEncoding=UTF-8
+        username: root
     rabbitmq:
         host: 10.100.2.109
         password: admin
@@ -34,9 +39,14 @@ xgxx:
         signOutPage: /ius/auth/logout
         signOutSuccessUrl: /ius/auth/login
         
-        redirectErrorPage403: http://10.100.2.109:9101/web/index
-        redirectErrorPage404: http://10.100.2.109:9101/web/index
-        redirectErrorPage500: http://10.100.2.109:9101/web/index
+#        redirectErrorPage403: http://10.100.2.109:9101/web/index
+#        redirectErrorPage404: http://10.100.2.109:9101/web/index
+#        redirectErrorPage500: http://10.100.2.109:9101/web/index
+    social:
+        github:
+            appId: c2414a22b635afbfb5ec
+            appSecret: e17c54e4d78ab22fc1a335a3eb796a2074598a8e
+            callback: http://127.0.0.1:9000/connet/github
 zuul:
     host:
         connect-timeout-millis: 600000
